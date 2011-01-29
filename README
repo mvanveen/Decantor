@@ -1,0 +1,23 @@
+Decantor: A JSON To CSV Conversion Tool
+# -----------------------------------------------------------------------------
+  Authors:
+    - Michael Van Veen
+  Date: 1/28/11
+# -----------------------------------------------------------------------------
+
+Description: |
+# -----------------------------------------------------------------------------
+Accountants of the world, rejoice!  Watch in awe as sophisticated, recursive
+tree structures flatten with ease.  Decantor is a tool to convert a list of 
+arbitrary JSON objects ino an equivalent matrix/spreadsheet representation.
+
+Currently only works on javascript arrays of json objects, due to the python
+json library's predilection towards exporting them.
+
+Example Usage: python decantor.py <json input> <csv output>
+
+TODOS:
+- Implement tests.  Fuzz testing could be neat.
+- Support for other JSON list formats (newline seperated, MongoDB, etc.)
+- Support for XML. (XML -> JSON -> CSV)
+
