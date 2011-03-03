@@ -32,14 +32,19 @@ from pprint import pprint
 
 class JSONToCSV(object):
   typecheck = lambda self, x: (type(x) == type({})) or (type(x) == type([]))
+
   def __init__(self, filestr):
     self.json         = json.loads(open(filestr, 'r').read())
     self._symbolTable = self.getSymbolTable()
     self._rows        = self.readRows()
     self._columns     = self.scrubColumns(self._symbolTable, self._rows)
                           
-
   def grabKeys(self, obj, stack=[], keys={}):
+   '''Recursively grabs a list of json object key strings.
+
+      Format is 'parent.child' for all nested keys.
+   '''
+
    childKeys = {}
    if (type(obj) == type({})):
      keys   = dict(
@@ -67,9 +72,13 @@ class JSONToCSV(object):
                 )))
 
   def getSymbolTable(self):
+   '''Returns an iterator of all keys within the json diagonalization.
+   '''
    return(sorted(self.grabKeys(self.json).iterkeys()))
 
   def readObj(self, obj):
+    '''Parses a list of json objects. Returns a diagonalization of all objects.
+    '''
     assert(self._symbolTable)
     keys = dict((x, [obj] + x.split('.')) for x in self.grabKeys(obj))
     if type(obj) == type([]):
@@ -96,16 +105,22 @@ class JSONToCSV(object):
             ) or ' ' for x in self._symbolTable]
     
   def readRows(self):
-    ''' >>> jsonrows = JSONToCSV('tests/test2.json').readRows()
+    '''Returns all the csv rows for an object.
+
+       Rows include cells with empty values that are ulimately scrubbed later.
+
+       >>> jsonrows = JSONToCSV('tests/test2.json').readRows()
        >>> assert([x for x in jsonrows] == [[u'', u'', u'lol'], [u'', u'', u'lol']])
     '''
     # Only works on lists of json objects
+    assert(self.json)
     assert(type(self.json) is type([]))
     return(self.readObj(x) for x in self.json)
 
-
   def scrubColumns(self, symbolTable, columns):
-    '''>>> json = JSONToCSV('tests/test2.json')
+    '''Removes empty columns from he output.
+
+       >>> json = JSONToCSV('tests/test2.json')
        >>> assert(json.scrubColumns(json.getSymbolTable(), json.readRows()) \
                     == {u'a.b.c': (u'lol', u'lol')}
                  )
