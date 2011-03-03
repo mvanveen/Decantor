@@ -24,11 +24,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import json, sys
+import json, sys, re
 from itertools     import chain, count, izip_longest
 from unicodeWriter import UnicodeWriter as csv
 from csv import QUOTE_ALL
 from pprint import pprint
+
 class JSONToCSV(object):
   typecheck = lambda self, x: (type(x) == type({})) or (type(x) == type([]))
   def __init__(self, filestr):
@@ -125,8 +126,12 @@ class JSONToCSV(object):
     with open(filename, 'wb') as outfile:
       csvObj = csv(outfile, dialect='excel', quoting=QUOTE_ALL)
       csvObj.writerow([x for x in self._columns.iterkeys()])
-      pprint([len(x) for x in izip_longest(*self._columns.itervalues())])
-      map(csvObj.writerow, izip_longest(*self._columns.itervalues()))
+      #pprint([len(x) for x in izip_longest(*self._columns.itervalues())])
+      map( lambda row: \
+              csvObj.writerow([re.sub(r'\r\n', '', cell) for cell in row]),
+            izip_longest(*self._columns.itervalues())
+         )
+
       #csvObj.writerows(self.readObj(self.json[4]))
 if __name__ == "__main__":
   jsonobj = JSONToCSV(sys.argv[1]).writeToFile(sys.argv[2])

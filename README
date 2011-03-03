@@ -18,12 +18,16 @@ Example Usage: |
 # -----------------------------------------------------------------------------
 python decantor.py <json input> <csv output>
 
+Changelog: 
+  3/2/11 : Scrubs empty columns from output.  Added some doctests.
+           CSV formatting disregards newlines and escapes everything.
+
 TODOS:
 # -----------------------------------------------------------------------------
 - Implement tests.  Fuzz testing could be neat.
 - Support for other JSON list formats (newline seperated, MongoDB, etc.)
 - Support for XML. (XML -> JSON -> CSV)
-- Scrub empty columns from output
+
 
 License: |
 # -----------------------------------------------------------------------------
