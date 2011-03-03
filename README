@@ -23,6 +23,7 @@ TODOS:
 - Implement tests.  Fuzz testing could be neat.
 - Support for other JSON list formats (newline seperated, MongoDB, etc.)
 - Support for XML. (XML -> JSON -> CSV)
+- Scrub empty columns from output
 
 License: |
 # -----------------------------------------------------------------------------
