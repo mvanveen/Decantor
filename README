@@ -19,8 +19,9 @@ Example Usage: |
 python decantor.py <json input> <csv output>
 
 Changelog: 
-  3/2/11 : Scrubs empty columns from output.  Added some doctests.
-           CSV formatting disregards newlines and escapes everything.
+# -----------------------------------------------------------------------------
+  - 3/2/11 : Scrubs empty columns from output.  Added some doctests.
+             CSV formatting disregards newlines and escapes everything.
 
 TODOS:
 # -----------------------------------------------------------------------------
